@@ -12,10 +12,11 @@ public class PathFinding : MonoBehaviour {
 	[Space(1)]
 	[Header("Show debug logs and lines?")]
 	public bool _debug = false;
+  public bool showSearchBoundaries = true;
 
   [Space(1)]
   [Header("Path finding parameters")]
-  public float search_boundary = 20f;
+  public float search_boundary = 10f;
   public float near_stopping_distance = 1f;
   public float agent_size = 0.2f;
   public float grid_granularity = 0.3f;
@@ -51,7 +52,6 @@ public class PathFinding : MonoBehaviour {
 	public Vector3 target_position;
   private Vector3 reset_pos;
   private List<Vector3> path_list;
-	private Stack<Transform> transform_record;
 	private Transform best_grip_transform;
 
 	private void Start() {
@@ -72,14 +72,35 @@ public class PathFinding : MonoBehaviour {
 		}
 
 		current_hand_status = HandStatus.GoingToTarget;
-		//transform_record = new Stack<Transform>();
 	}
+
+  private void showBounderies() {
+    float x = transform.position.x;
+    float y = transform.position.y;
+    float z = transform.position.z;
+    float dur = 0.05f;
+    //Bottom lines
+    Debug.DrawLine(new Vector3(-search_boundary + x, -search_boundary + y, -search_boundary + z), new Vector3(search_boundary + x, -search_boundary + y, -search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(-search_boundary + x, -search_boundary + y, -search_boundary + z), new Vector3(-search_boundary + x, -search_boundary + y, search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(search_boundary + x, -search_boundary + y, search_boundary + z), new Vector3(-search_boundary + x, -search_boundary + y, search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(search_boundary + x, -search_boundary + y, search_boundary + z), new Vector3(search_boundary + x, -search_boundary + y, -search_boundary + z), Color.magenta, dur);
+    //Vertical lines
+    Debug.DrawLine(new Vector3(-search_boundary + x, search_boundary + y, -search_boundary + z), new Vector3(search_boundary + x, search_boundary + y, -search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(-search_boundary + x, search_boundary + y, -search_boundary + z), new Vector3(-search_boundary + x, search_boundary + y, search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(search_boundary + x, search_boundary + y, search_boundary + z), new Vector3(-search_boundary + x, search_boundary + y, search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(search_boundary + x, search_boundary + y, search_boundary + z), new Vector3(search_boundary + x, search_boundary + y, -search_boundary + z), Color.magenta, dur);
+    //Top lines
+    Debug.DrawLine(new Vector3(-search_boundary + x, -search_boundary + y, -search_boundary + z), new Vector3(-search_boundary + x, search_boundary + y, -search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(-search_boundary + x, -search_boundary + y, search_boundary + z), new Vector3(-search_boundary + x, search_boundary + y, search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(search_boundary + x, -search_boundary + y, -search_boundary + z), new Vector3(search_boundary + x, search_boundary + y, -search_boundary + z), Color.magenta, dur);
+    Debug.DrawLine(new Vector3(search_boundary + x, -search_boundary + y, search_boundary + z), new Vector3(search_boundary + x, search_boundary + y, search_boundary + z), Color.magenta, dur);
+  }
 
   private void FindBestTarget() {
     targets = GameObject.FindGameObjectsWithTag("Target");
-    if (targets.Length == 0) {
-      current_hand_status = HandStatus.Waiting;
-    }
+    //if (targets.Length == 0) {
+    //  current_hand_status = HandStatus.Waiting;
+    //}
     float best_y = -100;
     float highest_score = -100;
     GameObject best_target = null;
@@ -91,24 +112,23 @@ public class PathFinding : MonoBehaviour {
       //  print(target.name + "'s score is: " + highest_score);
       //}
 
-      Transform center = target.transform.Find("CenterPoint");
+      //Transform center = target.transform.Find("CenterPoint");
+      Transform center = target.transform.FindDeepChild("CenterPoint");
       if (center.transform.position.y > best_y) {
         best_y = center.transform.position.y;
         best_target = target;
       }
     }
-
-
-
-    if (target_game_object != null) {
+    if (best_target != null) {
       target_game_object = best_target;
     } else {
-      current_hand_status = HandStatus.Reset;
+      target_game_object = best_target;
+      current_hand_status = HandStatus.Waiting;
       print("Target = null");
     }
   }
 
-	public void UpdateTargetPosition(Vector3 new_target_position) {
+  public void UpdateTargetPosition(Vector3 new_target_position) {
     start_position = transform.position;
 		target_position = new_target_position;
 		UpdatePath(start_position, target_position);
@@ -165,6 +185,8 @@ public class PathFinding : MonoBehaviour {
   }
 
 	private void Update() {
+    if (showSearchBoundaries)
+      showBounderies();
     FindBestTarget();
     switch (current_hand_status) {
 			case HandStatus.GoingToTarget:
@@ -195,7 +217,6 @@ public class PathFinding : MonoBehaviour {
 				break;
 
 			case HandStatus.GoingToEndPoint:
-        //DidSceneUpdate();
         FollowPathNoRot();
         delivering = true;
 				break;
@@ -209,6 +230,7 @@ public class PathFinding : MonoBehaviour {
         if (delivering) { //To make sure no targets gets untagged by mistake
           print("Untagging: " + target_game_object.name);
           target_game_object.tag = "Untagged";
+          Destroy(target_game_object, 2);
           delivering = false;
         }
         FindBestTarget();
@@ -219,7 +241,10 @@ public class PathFinding : MonoBehaviour {
         break;
 
       case HandStatus.Waiting:
-        current_hand_status = DidSceneUpdate() ? HandStatus.Waiting : prev_hand_status;
+        if (target_game_object != null) {
+          current_hand_status = DidSceneUpdate() ? HandStatus.Waiting : prev_hand_status;          
+        }
+
         break;
 
       case HandStatus.Reset:
@@ -230,7 +255,6 @@ public class PathFinding : MonoBehaviour {
 				print("Not doing anything (default case)");
 				break;
 		}
-		RecordTransform(transform);
 
 		if (_debug) {
       print("Current Status: " + current_hand_status);
@@ -240,7 +264,7 @@ public class PathFinding : MonoBehaviour {
   private void ResetGripper() {
     Vector3 sliderPos = slider.transform.localPosition;
     if (sliderPos.y >= 0.02f) {
-      sliderPos.y -= 0.02f * Time.deltaTime;
+      sliderPos.y -= 0.04f * Time.deltaTime;
       slider.transform.localPosition = sliderPos;
     } else {
       progress_scaling = 0.2f;
@@ -259,7 +283,8 @@ public class PathFinding : MonoBehaviour {
       progress_scaling = 0.01f;
       FindBestTarget();
       target_pos_updated = false;
-      UpdateTargetPosition(target_game_object.transform.position);
+      if (target_game_object != null)
+        UpdateTargetPosition(target_game_object.transform.position);
       isReset = false;
       current_hand_status = HandStatus.GoingToTarget;
     }
@@ -331,7 +356,7 @@ public class PathFinding : MonoBehaviour {
 	private void CloseClaws() {
     Vector3 sliderPos = slider.transform.localPosition;
     if (sliderPos.y <= 0.16f) {
-      sliderPos.y += .02f * Time.deltaTime;
+      sliderPos.y += .025f * Time.deltaTime;
       slider.transform.localPosition = sliderPos;
 
     } else if (sliderPos.y >= 0.16f && !target_grabbed) {
@@ -346,12 +371,14 @@ public class PathFinding : MonoBehaviour {
 	private void OpenClaws() {
     if (target_game_object != null) {
       target_game_object.transform.parent = null;
-      target_game_object.GetComponent<Rigidbody>().useGravity = true;
-      target_game_object.GetComponent<Rigidbody>().angularDrag = 0;
+      if (target_game_object.GetComponent<Rigidbody>() != null) {
+        target_game_object.GetComponent<Rigidbody>().useGravity = true;
+        target_game_object.GetComponent<Rigidbody>().angularDrag = 0;
+      }
     }
     Vector3 sliderPos = slider.transform.localPosition;
     if (sliderPos.y > 0.02f) {
-      sliderPos.y -= .02f * Time.deltaTime;
+      sliderPos.y -= .025f * Time.deltaTime;
       slider.transform.localPosition = sliderPos;
     }
     if (current_hand_status != HandStatus.Reset) {
@@ -462,8 +489,22 @@ public class PathFinding : MonoBehaviour {
     return target_pos_on_curve;
 	}
 
-	private void RecordTransform(Transform current_transform) {
-		//transform_record.Push(current_transform);
-	}
 
+
+}
+
+
+public static class TransformDeepChildExtension {
+  //Breadth-first search
+  public static Transform FindDeepChild(this Transform aParent, string aName) {
+    var result = aParent.Find(aName);
+    if (result != null)
+      return result;
+    foreach (Transform child in aParent) {
+      result = child.FindDeepChild(aName);
+      if (result != null)
+        return result;
+    }
+    return null;
+  }
 }

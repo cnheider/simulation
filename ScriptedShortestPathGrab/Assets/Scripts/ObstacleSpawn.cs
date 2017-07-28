@@ -21,14 +21,17 @@ public class ObstacleSpawn : MonoBehaviour {
 
   [Space]
   [Header("Bounderies")]
-  public float x_max = 0.7f; 
-  public float x_min = -0.7f;
+  [Range(0.10f, 5.00f)]
+  public float x_size = 1.4f;
+  [Range(0.10f, 4.00f)]
+  public float y_size = 1.2f;
+  [Range(0.00f, 3.00f)]
+  public float y_centerPoint = 1.4f;
+  [Range(0.10f, 5.00f)]
+  public float z_size = 1.4f;
 
-  public float y_max = 2;
-  public float y_min = 0.6f;
-
-  public float z_max = 0.7f;
-  public float z_min = -0.7f;
+  [Header("Show obstacle spawn grid?")]
+  public bool visualize_grid = true;
 
   [Space]
   [Header("Random scaling of objects (0 = uniform scale)")]
@@ -57,6 +60,11 @@ public class ObstacleSpawn : MonoBehaviour {
     } else {
       SpawnObstacles(number_of_cubes, number_of_spheres);
     }
+
+  }
+  void Update() {
+    if (visualize_grid)
+      VisualizeGrid();
   }
 
   public void SpawnObstacles(float cubeNum = 1, float sphereNum = 1) {
@@ -66,14 +74,15 @@ public class ObstacleSpawn : MonoBehaviour {
       Vector3 spawn_pos;
       for (int i = 0; i < cubeNum; i++) {
         float temp = Random.Range(-scaling_factor, scaling_factor);
-        spawn_pos = new Vector3(Random.Range(x_min, x_max), Random.Range(y_min, y_max), Random.Range(z_min, z_max));
+        //spawn_pos = new Vector3(Random.Range(x_min, x_max), Random.Range(y_min, y_max), Random.Range(z_min, z_max));
+        spawn_pos = new Vector3(Random.Range(-x_size/2, x_size / 2), Random.Range(-y_size/2 + y_centerPoint, y_size / 2 + y_centerPoint), Random.Range(-z_size/2, z_size / 2));
         GameObject cube_clone = Instantiate(cube, spawn_pos, Quaternion.identity);
         cube_clone.transform.localScale = new Vector3(sphere_size + temp, sphere_size + temp, sphere_size + temp);
         cube_clone.SetActive(true);
         cube_clone.tag = "Obstruction";
 
         tempList.Add(cube_clone);
-        if (Vector3.Distance(cube_clone.transform.position, GameObject.Find("EscapePos").transform.position) < 0.2f) {
+        if (Vector3.Distance(cube_clone.transform.position, GameObject.Find("EscapePos").transform.position) < 0.5f) {
           Destroy(cube_clone);
         }
       }
@@ -83,7 +92,8 @@ public class ObstacleSpawn : MonoBehaviour {
       Vector3 spawn_pos;
       for (int i = 0; i < sphereNum; i++) {
         float temp = Random.Range(-scaling_factor, scaling_factor);
-        spawn_pos = new Vector3(Random.Range(x_min, x_max), Random.Range(y_min, y_max), Random.Range(z_min, z_max));
+        //spawn_pos = new Vector3(Random.Range(x_min, x_max), Random.Range(y_min, y_max), Random.Range(z_min, z_max));
+        spawn_pos = new Vector3(Random.Range(-x_size/2, x_size / 2), Random.Range(-y_size/2 + y_centerPoint, y_size/2 + y_centerPoint), Random.Range(-z_size/2, z_size / 2));
         GameObject sphere_clone = Instantiate(sphere, spawn_pos, Quaternion.identity);
         sphere_clone.transform.localScale = new Vector3(sphere_size + temp, sphere_size + temp, sphere_size + temp);
         sphere_clone.SetActive(true);
@@ -102,6 +112,33 @@ public class ObstacleSpawn : MonoBehaviour {
     for (int i = 0; i < objects.Length; i++) {
       Destroy(objects[i]);
     }
+  }
+
+  void VisualizeGrid() {
+    float x = x_size / 2;
+    float y = y_size / 2;
+    float z = z_size / 2;
+    float yCP = y_centerPoint;
+    float dur = 0.05f;
+
+    //Vertical lines
+    Debug.DrawLine(new Vector3(-x, -y + yCP, -z), new Vector3(-x, y + yCP, -z), Color.green, dur);
+    Debug.DrawLine(new Vector3(x, -y + yCP, -z), new Vector3(x, y + yCP, -z), Color.green, dur);
+    Debug.DrawLine(new Vector3(-x, -y + yCP, z), new Vector3(-x, y + yCP, z), Color.green, dur);
+    Debug.DrawLine(new Vector3(x, -y + yCP, z), new Vector3(x, y + yCP, z), Color.green, dur);
+
+    //Horizontal top
+    Debug.DrawLine(new Vector3(-x, y + yCP, -z), new Vector3(x, y + yCP, -z), Color.green, dur);
+    Debug.DrawLine(new Vector3(-x, y + yCP, z), new Vector3(x, y + yCP, z), Color.green, dur);
+    Debug.DrawLine(new Vector3(-x, y + yCP, -z), new Vector3(-x, y + yCP, z), Color.green, dur);
+    Debug.DrawLine(new Vector3(x, y + yCP, -z), new Vector3(x, y + yCP, z), Color.green, dur);
+
+    //Horizontal bottom
+    Debug.DrawLine(new Vector3(-x, -y + yCP, -z), new Vector3(x, -y + yCP, -z), Color.green, dur);
+    Debug.DrawLine(new Vector3(-x, -y + yCP, z), new Vector3(x, -y + yCP, z), Color.green, dur);
+    Debug.DrawLine(new Vector3(-x, -y + yCP, -z), new Vector3(-x, -y + yCP, z), Color.green, dur);
+    Debug.DrawLine(new Vector3(x, -y + yCP, -z), new Vector3(x_size / 2, -y + yCP, z), Color.green, dur);
+
   }
 
 }
