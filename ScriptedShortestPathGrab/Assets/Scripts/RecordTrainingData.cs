@@ -6,22 +6,22 @@ using System.Text;
 
 public class RecordTrainingData : MonoBehaviour {
 
-  //public Material _material;
+  public Material _material;
   public bool deleteFileContent = false;
   Transform gripper;
-  string filePath_posRot = @"C:\TrainingData\posRot.csv";
+  string file_path_pos_rot = @"C:\TrainingData\posRot.csv";
   string[][] transform_output;
 
   void Start () {
     gripper = GameObject.Find("Gripper").transform;
     GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
 
-    if (!File.Exists(filePath_posRot)) {
-      print("Created file/path: " + filePath_posRot);
-      File.Create(filePath_posRot);
+    if (!File.Exists(file_path_pos_rot)) {
+      print("Created file/path: " + file_path_pos_rot);
+      File.Create(file_path_pos_rot);
     }
     if (deleteFileContent) {
-      File.WriteAllText(filePath_posRot, "");
+      File.WriteAllText(file_path_pos_rot, "");
       deleteFileContent = false;
     }
   }
@@ -31,7 +31,7 @@ public class RecordTrainingData : MonoBehaviour {
     
 
     RecordTransform(transform);
-    SaveCSV(filePath_posRot);
+    SaveToCSV(file_path_pos_rot);
     //GetData();
   }
 
@@ -49,7 +49,7 @@ public class RecordTrainingData : MonoBehaviour {
   }
 
   //Writes to file in the format: pos x, pos y, pos z, rot x, rot y, rot z
-  void SaveCSV(string filePath) {
+  void SaveToCSV(string filePath) {
     string delimiter = ", ";
 
     StringBuilder sb = new StringBuilder();
@@ -68,7 +68,7 @@ public class RecordTrainingData : MonoBehaviour {
   }
 
   void OnRenderImage(RenderTexture source, RenderTexture destination) {
-    //Graphics.Blit(source, destination, _material);
+    Graphics.Blit(source, destination, _material);
   }
 
   public static Texture2D RenderTextureImage(Camera camera) { // From unity documentation, https://docs.unity3d.com/ScriptReference/Camera.Render.html

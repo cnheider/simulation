@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class GUIControl : MonoBehaviour {
   float gripper_target_distance;
   int iterations;
   int obstacle_num;
-  PathFinding pf;
+  Gripper pf;
 
   public Text t_gripper_target_distance;
   public Text t_iterations;
@@ -22,20 +23,16 @@ public class GUIControl : MonoBehaviour {
   public Slider s_obstacle;
 
   void Start() {
-    pf = GameObject.Find("Gripper").GetComponent<PathFinding>();
+    pf = GameObject.Find("Gripper").GetComponent<Gripper>();
     t_gripper_target_distance.text = s_distance.value.ToString("0.00");
     t_obstacle_num.text = s_obstacle.value.ToString();
     t_wating.text = "";
   }
 
   void Update() {
-    t_status.text = pf.current_hand_status.ToString();
-    if (pf.current_hand_status == PathFinding.HandStatus.Waiting && pf.target_game_object != null) {
+    t_status.text = pf._states.CurrentGripperState.ToString();
+    if (pf._states.CurrentPathFindingState == States.PathFindingState.Idling) {
       t_wating.text = "Detecting movement\nWaiting...";
-
-    } else if (pf.target_game_object == null && pf.current_hand_status == PathFinding.HandStatus.Waiting) {
-      t_wating.text = "No more targets.";
-
     } else {
       t_wating.text = "";
     }

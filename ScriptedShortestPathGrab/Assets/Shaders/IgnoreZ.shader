@@ -13,7 +13,7 @@
       }
       Pass{
         ZTest Less
-        Color[_Color1]
+        Color[_Color2]
       }
   }
 }

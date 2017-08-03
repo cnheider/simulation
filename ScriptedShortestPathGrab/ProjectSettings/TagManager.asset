@@ -13,6 +13,9 @@ TagManager:
   - FishPart
   - Bone
   - Target
+  - Gripper
+  - Claw
+  - Stopper
   layers:
   - Default
   - TransparentFX
