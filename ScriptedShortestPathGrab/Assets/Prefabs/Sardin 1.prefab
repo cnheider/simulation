@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4090682687530232}
   - component: {fileID: 23278981465572194}
   - component: {fileID: 114966101165646424}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab6
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4620645643219442}
   - component: {fileID: 33755795765783750}
   - component: {fileID: 23645211511298076}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4289723536905070}
   - component: {fileID: 33467043365690170}
   - component: {fileID: 23350352101146894}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4646537962297836}
   - component: {fileID: 33983449670802102}
   - component: {fileID: 23320955079548574}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4530040975165934}
   - component: {fileID: 33061353317422072}
   - component: {fileID: 23435445327787124}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4947870061832164}
   - component: {fileID: 33789343992391322}
   - component: {fileID: 23312412063936788}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 4057819738375182}
   - component: {fileID: 33174870721294842}
   - component: {fileID: 23892409343358386}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4594225357461854}
   - component: {fileID: 33535245075514328}
   - component: {fileID: 23868623499695172}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 4565554105611592}
   - component: {fileID: 33117873634951720}
   - component: {fileID: 23154655911331892}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 4513497339993482}
   - component: {fileID: 33945839588508618}
   - component: {fileID: 23487048496344206}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 4812137527658990}
   - component: {fileID: 33436126030289896}
   - component: {fileID: 23020432116242438}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 4963157404208022}
   - component: {fileID: 33223616673144834}
   - component: {fileID: 23773822023833486}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 4139554314988332}
   - component: {fileID: 33148030125657814}
   - component: {fileID: 23252628067645756}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 4520297599366948}
   - component: {fileID: 23445432459304286}
   - component: {fileID: 114329419873996346}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab12
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 4912873675282466}
   - component: {fileID: 23124871498153708}
   - component: {fileID: 114809464406540738}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab2
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 4767673841788824}
   - component: {fileID: 33541682858221532}
   - component: {fileID: 23679044216173506}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 4181908736501282}
   - component: {fileID: 23736937415538350}
   - component: {fileID: 114927655577263958}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab8
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 4567399109287526}
   - component: {fileID: 33749319148552852}
   - component: {fileID: 23590446547263008}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 4175090298560246}
   - component: {fileID: 33098845196901832}
   - component: {fileID: 23127759840743284}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 114691524547118446}
   - component: {fileID: 136111754878811242}
   - component: {fileID: 137961618611676872}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Sardin 1
   m_TagString: Target
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 4866744980078752}
   - component: {fileID: 33397918194870876}
   - component: {fileID: 23871894429888726}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 4639670963633640}
   - component: {fileID: 33083186416293980}
   - component: {fileID: 23321560966738526}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 4691134239695730}
   - component: {fileID: 23268819840790298}
   - component: {fileID: 114031235535522162}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab5
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 4976448056190748}
   - component: {fileID: 23556156494535526}
   - component: {fileID: 114652486171035742}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab1
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 4491861168082458}
   - component: {fileID: 33223646293832936}
   - component: {fileID: 23177100288712092}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 4271943935457014}
   - component: {fileID: 33509754128448694}
   - component: {fileID: 23103331366987048}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 4272342301266852}
   - component: {fileID: 33974677201136126}
   - component: {fileID: 23180140444468308}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 4367081844919520}
   - component: {fileID: 23522440748082116}
   - component: {fileID: 114083264732335652}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab10
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 4102090363279712}
   - component: {fileID: 33357221369376508}
   - component: {fileID: 23442252658696948}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 4641331509140664}
   - component: {fileID: 33384293278476758}
   - component: {fileID: 23409654388655290}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +533,7 @@ GameObject:
   - component: {fileID: 4827525615529332}
   - component: {fileID: 33322898679766278}
   - component: {fileID: 23584398807893730}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 4007366298039902}
   - component: {fileID: 33263130373156062}
   - component: {fileID: 23888565483071604}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 4999816826881324}
   - component: {fileID: 23425646938303328}
   - component: {fileID: 114369401423434366}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab7
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 4795918585372692}
   - component: {fileID: 23958094069890558}
   - component: {fileID: 114015732746664692}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab4
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 4736986815546444}
   - component: {fileID: 33167906812988448}
   - component: {fileID: 23540390360033958}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 4386882786421016}
   - component: {fileID: 23766977935470618}
   - component: {fileID: 114081378639143214}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab9
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -635,7 +635,7 @@ GameObject:
   - component: {fileID: 4944102371698648}
   - component: {fileID: 33707210913800448}
   - component: {fileID: 23903641856749452}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 4488702469319856}
   - component: {fileID: 33063760551471746}
   - component: {fileID: 23921803363824902}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 4240963845760634}
   - component: {fileID: 23217744259427562}
   - component: {fileID: 114548338835383668}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab3
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 4368014109737678}
   - component: {fileID: 33059936759352652}
   - component: {fileID: 23985639865575284}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 4557192026137270}
   - component: {fileID: 33436475213679300}
   - component: {fileID: 23223721507902282}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -720,7 +720,7 @@ GameObject:
   - component: {fileID: 4495074143117672}
   - component: {fileID: 33384490198991036}
   - component: {fileID: 23766019125774254}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 4953119541286558}
   - component: {fileID: 33306626557693256}
   - component: {fileID: 23872860652430180}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 4189662070739026}
   - component: {fileID: 33067200909660496}
   - component: {fileID: 23402901438047918}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -771,7 +771,7 @@ GameObject:
   - component: {fileID: 4560740011061524}
   - component: {fileID: 23705738488218958}
   - component: {fileID: 114837512821605912}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Grab11
   m_TagString: GrabTag
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 4472455179394494}
   - component: {fileID: 33127554433047292}
   - component: {fileID: 23192319911431580}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 4022145044135222}
   - component: {fileID: 33866029250784132}
   - component: {fileID: 23058648201849424}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ GameObject:
   - component: {fileID: 4231469164412790}
   - component: {fileID: 33528646617411660}
   - component: {fileID: 23839632660078392}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +839,7 @@ GameObject:
   - component: {fileID: 4395880234523286}
   - component: {fileID: 33472871770041318}
   - component: {fileID: 23974348114704706}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +892,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1005335467714846}
   m_LocalRotation: {x: 0.6830127, y: 0.6830127, z: 0.18301274, w: 0.18301274}
-  m_LocalPosition: {x: -0.34, y: -0, z: 0.59}
+  m_LocalPosition: {x: -0.14, y: 0, z: 0.243}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4139554314988332}
@@ -921,7 +921,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1365923595873588}
   m_LocalRotation: {x: 0.51827997, y: -0.25415313, z: 0.48102587, w: 0.65985316}
-  m_LocalPosition: {x: -0.042, y: 0.424, z: -0.087}
+  m_LocalPosition: {x: 0.03, y: 0.88, z: 0.05}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4976448056190748}
@@ -972,7 +972,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1279850648729214}
   m_LocalRotation: {x: 0.6830127, y: 0.6830127, z: -0.18301265, w: -0.18301265}
-  m_LocalPosition: {x: 0.35, y: -0, z: 0.6}
+  m_LocalPosition: {x: 0.14, y: 0, z: 0.242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4189662070739026}
@@ -1014,7 +1014,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1821431799746528}
   m_LocalRotation: {x: 0.3535534, y: 0.3535534, z: 0.61237246, w: 0.61237246}
-  m_LocalPosition: {x: -0.41, y: 0, z: -0.24}
+  m_LocalPosition: {x: -0.203, y: -0, z: -0.118}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4953119541286558}
@@ -1069,7 +1069,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571925857377596}
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: -0.5}
-  m_LocalPosition: {x: 0.69, y: -0, z: 0}
+  m_LocalPosition: {x: 0.202, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4022145044135222}
@@ -1098,7 +1098,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1736825398706174}
   m_LocalRotation: {x: 0.61237246, y: 0.61237246, z: -0.3535534, w: -0.3535534}
-  m_LocalPosition: {x: 0.6, y: -0, z: 0.35}
+  m_LocalPosition: {x: 0.202, y: 0, z: 0.117}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4639670963633640}
@@ -1192,7 +1192,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1225058948430056}
   m_LocalRotation: {x: 0.18301277, y: 0.18301277, z: -0.6830127, w: -0.6830127}
-  m_LocalPosition: {x: 0.31, y: -0, z: -0.53}
+  m_LocalPosition: {x: 0.137, y: 0, z: -0.237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4102090363279712}
@@ -1234,7 +1234,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1905802215468048}
   m_LocalRotation: {x: 0.3535534, y: 0.3535534, z: -0.61237246, w: -0.61237246}
-  m_LocalPosition: {x: 0.57, y: -0, z: -0.33}
+  m_LocalPosition: {x: 0.218, y: -0, z: -0.126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4866744980078752}
@@ -1341,7 +1341,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1477760102849560}
   m_LocalRotation: {x: 0.61237246, y: 0.61237246, z: 0.35355335, w: 0.35355335}
-  m_LocalPosition: {x: -0.49, y: -0, z: 0.28}
+  m_LocalPosition: {x: -0.193, y: 0, z: 0.111}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4530040975165934}
@@ -1383,7 +1383,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1734478226496872}
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.52, y: 0, z: 0}
+  m_LocalPosition: {x: -0.217, y: -0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4767673841788824}
@@ -1438,7 +1438,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1229733542973280}
   m_LocalRotation: {x: 0.18301274, y: 0.18301274, z: 0.6830127, w: 0.6830127}
-  m_LocalPosition: {x: -0.285, y: -0, z: -0.494}
+  m_LocalPosition: {x: -0.145, y: 0, z: -0.252}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4963157404208022}
@@ -1506,7 +1506,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1481650002787740}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalPosition: {x: -0, y: -0, z: -0.299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4812137527658990}
@@ -1522,7 +1522,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684219550704534}
   m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.64}
+  m_LocalPosition: {x: -0, y: -0, z: 0.299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4513497339993482}
@@ -3345,8 +3345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114031235535522162
 MonoBehaviour:
@@ -3359,8 +3359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114081378639143214
 MonoBehaviour:
@@ -3373,8 +3373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114083264732335652
 MonoBehaviour:
@@ -3387,8 +3387,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114329419873996346
 MonoBehaviour:
@@ -3401,8 +3401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114369401423434366
 MonoBehaviour:
@@ -3415,8 +3415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114548338835383668
 MonoBehaviour:
@@ -3429,8 +3429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114652486171035742
 MonoBehaviour:
@@ -3443,8 +3443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114691524547118446
 MonoBehaviour:
@@ -3457,7 +3457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d658b6e8e449cd547b85db25c46666d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabs_visible: 1
+  _draw_grasp: 1
   floor_distance_scalar: 1
   gripper_distance_scalar: 1
 --- !u!114 &114809464406540738
@@ -3471,8 +3471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114837512821605912
 MonoBehaviour:
@@ -3485,8 +3485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114927655577263958
 MonoBehaviour:
@@ -3499,8 +3499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!114 &114966101165646424
 MonoBehaviour:
@@ -3513,8 +3513,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd10c827cf0231e4eb8643106b236264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obstruction_cast_length: 0.1
-  _obstruction_cast_width: 0.1
+  _obstruction_cast_length: 0.2
+  _obstruction_cast_radius: 0.1
   _draw_ray_cast: 1
 --- !u!136 &136111754878811242
 CapsuleCollider:
@@ -3525,7 +3525,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.37
+  m_Radius: 0.38
   m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

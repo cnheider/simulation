@@ -38,6 +38,7 @@ public class Gripper : MonoBehaviour {
   public float _precision = 0.01f;
 
   public float _approach_distance = 0.5f;
+  public bool _wait_for_resting_environment = false;
 
   [Space(1)]
   [Header("Show debug logs")]
@@ -59,13 +60,19 @@ public class Gripper : MonoBehaviour {
     _default_motor_position = _motor.transform.localPosition;
     _closed_motor_position = _closed_motor_transform.localPosition;
 
-    var agent_bounds = Utilities.GetTotalMeshFilterBounds(this.transform);
-    _agent_size = agent_bounds.size.magnitude;
-    _approach_distance = agent_bounds.size.magnitude + _precision;
+    UpdateMeshFilterBounds();
 
     FindTargetAndUpdatePath();
     _state.ResetStates();
     SetupEnvironment();
+  }
+
+  private void UpdateMeshFilterBounds() {
+    var agent_bounds = Utilities.GetMaxBounds(this.gameObject);
+    //_agent_size = agent_bounds.size.magnitude;
+    //_approach_distance = agent_bounds.size.magnitude + _precision;
+    _agent_size = agent_bounds.extents.magnitude * 2; //Mathf.Max(agent_bounds.extents.x, Mathf.Max(agent_bounds.extents.y, agent_bounds.extents.z)) * 2;
+    _approach_distance = _agent_size + _precision;
   }
 
   private void SetupEnvironment() {
@@ -82,7 +89,7 @@ public class Gripper : MonoBehaviour {
         break;
 
       case PathFindingState.Navigating:
-        if (state.IsEnvironmentMoving()) {
+        if (state.IsEnvironmentMoving() && _wait_for_resting_environment) {
           state.WaitForRestingEnvironment();
           break;
         }
@@ -121,8 +128,13 @@ public class Gripper : MonoBehaviour {
       case PathFindingState.Returning:
         if (state.WereObstructionMoving())
           _path = FindPath(this.transform.position, _reset_position);
-        if (state.IsObstructionsAtRest()) {
-          FollowPathToApproach(_step_size, Quaternion.Euler(90,0,0), true);
+        if (_wait_for_resting_environment) {
+          if (state.IsObstructionsAtRest()) {
+            FollowPathToApproach(_step_size, Quaternion.Euler(90, 0, 0), true);
+            MaybeBeginReleaseProcedure();
+          }
+        } else {
+          FollowPathToApproach(_step_size, Quaternion.Euler(90, 0, 0), true);
           MaybeBeginReleaseProcedure();
         }
         break;
@@ -183,6 +195,7 @@ public class Gripper : MonoBehaviour {
   private void MaybeClawIsClosed() {
     if (Vector3.Distance(this._motor.transform.localPosition, _closed_motor_position) < _precision ) {
       _state.GripperIsClosed();
+      _path = FindPath(this.transform.position, _reset_position);
       _state.ReturnToStartPosition();
     }
   }
@@ -217,67 +230,93 @@ public class Gripper : MonoBehaviour {
   #region Collisions
 
   private void OnTriggerEnterChild(GameObject child_game_object, Collider other_game_object) {
-    if (child_game_object.name == _begin_grab_region.name && other_game_object.transform.name == _target_game_object.name) {
-      _state.PickUpTarget();
+    if (other_game_object.gameObject.GetComponent<Obstruction>() != null) {
+      _state.GripperState = GripperState.Closing;
     }
 
-    if (child_game_object.name == _grab_region.name && other_game_object.transform.name == _target_game_object.name) {
-      _state.TargetIsInsideRegion();
+    var other_maybe_graspable = other_game_object.GetComponentInParent<GraspableObject>();
+    if (other_maybe_graspable && other_maybe_graspable.tag != "FishPart") {
+      if (child_game_object.name == _begin_grab_region.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.PickUpTarget();
+      }
+
+      if (child_game_object.name == _grab_region.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.TargetIsInsideRegion();
+      }
     }
   }
 
   private void OnTriggerStayChild(GameObject child_game_object, Collider other_game_object) {
-    if (child_game_object.name == _grab_region.name && other_game_object.transform.name == _target_game_object.name) {
-      _state.TargetIsInsideRegion();
-    }
+    var other_maybe_graspable = other_game_object.GetComponentInParent<GraspableObject>();
+    if (other_maybe_graspable && other_maybe_graspable.tag != "FishPart") {
+      if (child_game_object.name == _grab_region.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.TargetIsInsideRegion();
+      }
 
-    if (child_game_object.name == _begin_grab_region.name && other_game_object.transform.name == _target_game_object.name) {
-      _state.PickUpTarget();
+      if (child_game_object.name == _begin_grab_region.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.PickUpTarget();
+      }
     }
   }
 
   private void OnCollisionStayChild(GameObject child_game_object, Collision collision) {
-    if (child_game_object.name == _claw_1.name && collision.gameObject.name == _target_game_object.name) {
-      _state.Claw1IsTouchingTarget();
-    }
+    var other_maybe_graspable = collision.gameObject.GetComponentInParent<GraspableObject>();
+    if (other_maybe_graspable && other_maybe_graspable.tag != "FishPart") {
+      if (child_game_object.name == _claw_1.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.Claw1IsTouchingTarget();
+      }
 
-    if (child_game_object.name == _claw_2.name && collision.gameObject.name == _target_game_object.name) {
-      _state.Claw2IsTouchingTarget();
+      if (child_game_object.name == _claw_2.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.Claw2IsTouchingTarget();
+      }
     }
   }
 
   private void OnCollisionExitChild(GameObject child_game_object, Collision collision) {
     if (collision.gameObject.GetComponent<Obstruction>() != null) {
-      //_states.CurrentGripperState = GripperState.Opening;
+      _state.GripperState = GripperState.Opening;
     }
 
-    if (child_game_object.name == _claw_1.name && collision.gameObject.name == _target_game_object.name) {
-      _state.Claw1IsNotTouchingTarget();
-    }
 
-    if (child_game_object.name == _claw_2.name && collision.gameObject.name == _target_game_object.name) {
-      _state.Claw2IsNotTouchingTarget();
+    var other_maybe_graspable = collision.gameObject.GetComponentInParent<GraspableObject>();
+    if (other_maybe_graspable && other_maybe_graspable.tag != "FishPart") {
+      if (child_game_object.name == _claw_1.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.Claw1IsNotTouchingTarget();
+      }
+
+      if (child_game_object.name == _claw_2.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.Claw2IsNotTouchingTarget();
+      }
     }
   }
 
   private void OnTriggerExitChild(GameObject child_game_object, Collider other_game_object) {
-    if (child_game_object.name == _grab_region.name && other_game_object.transform.name == _target_game_object.name) {
-      _state.TargetIsOutsideRegion();
+    if (other_game_object.gameObject.GetComponent<Obstruction>() != null) {
+      _state.GripperState = GripperState.Opening;
+    }
+
+    var other_maybe_graspable = other_game_object.GetComponentInParent<GraspableObject>();
+      if (other_maybe_graspable && other_maybe_graspable.tag != "FishPart") {
+        if (child_game_object.name == _grab_region.name && other_maybe_graspable.name == _target_game_object.name) {
+          _state.TargetIsOutsideRegion();
+        }
     }
   }
 
   private void OnCollisionEnterChild(GameObject child_game_object, Collision collision) {
     if (collision.gameObject.GetComponent<Obstruction>() != null) {
-      //_state.GripperState = GripperState.Closing;
-      //_state.PathFindingState = PathFindingState.PickingUpTarget;
+      _state.GripperState = GripperState.Closing;
     }
 
-    if (child_game_object.name == _claw_1.name && collision.gameObject.name == _target_game_object.name) {
-      _state.Claw1IsTouchingTarget();
-    }
+    var other_maybe_graspable = collision.gameObject.GetComponentInParent<GraspableObject>();
+    if (other_maybe_graspable  && other_maybe_graspable.tag != "FishPart") {
+      if (child_game_object.name == _claw_1.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.Claw1IsTouchingTarget();
+      }
 
-    if (child_game_object.name == _claw_2.name && collision.gameObject.name == _target_game_object.name) {
-      _state.Claw2IsTouchingTarget();
+      if (child_game_object.name == _claw_2.name && other_maybe_graspable.name == _target_game_object.name) {
+        _state.Claw2IsTouchingTarget();
+      }
     }
   }
 
@@ -295,7 +334,7 @@ public class Gripper : MonoBehaviour {
     Grasp optimal_grasp = null;
     foreach (GraspableObject target in targets) {
       var pair = target.GetOptimalGrasp(this);
-      if (pair != null && pair.First != null && !pair.First.IsObstructed() && pair.Second != null) {
+      if (pair != null && pair.First != null && !pair.First.IsObstructed()) {
         var target_grasp = pair.First;
         var distance = pair.Second;
         if (distance < shortest_distance) {
@@ -325,6 +364,7 @@ public class Gripper : MonoBehaviour {
   }
 
   private Path FindPath(Vector3 start_position, Vector3 target_position) {
+    UpdateMeshFilterBounds();
     var _path_list = PathFinding.FindPathAstar(start_position, target_position, _search_boundary, _grid_granularity, _agent_size, _approach_distance);
 
     _path_list.Add(target_position);

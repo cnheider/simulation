@@ -23,9 +23,9 @@ namespace Assets.Scripts.Grasping {
 
     public bool IsObstructed() {
       RaycastHit hit;
-      if (Physics.Linecast(this.transform.position, this.transform.position - this.transform.forward * _obstruction_cast_length))
+      if (Physics.Linecast(this.transform.position, this.transform.position - this.transform.forward * _obstruction_cast_length, LayerMask.GetMask("Obstruction")))
         return true;
-      if (Physics.SphereCast(this.transform.position, _obstruction_cast_radius, -this.transform.forward, out hit, _obstruction_cast_length))
+      if (Physics.SphereCast(this.transform.position, _obstruction_cast_radius, -this.transform.forward, out hit, _obstruction_cast_length, LayerMask.GetMask("Obstruction")))
         return true;
       if (Physics.OverlapCapsule(this.transform.position - this.transform.forward * _obstruction_cast_radius, this.transform.position - this.transform.forward * _obstruction_cast_length, _obstruction_cast_radius, LayerMask.GetMask("Obstruction")).Length > 0)
         return true;

@@ -81,6 +81,7 @@ namespace Assets.Scripts {
 
     public static Bounds GetTotalMeshFilterBounds(Transform objectTransform) {
       var meshFilter = objectTransform.GetComponent<MeshFilter>();
+
       var result = meshFilter != null ? meshFilter.mesh.bounds : new Bounds();
 
       foreach (Transform transform in objectTransform) {
@@ -88,6 +89,18 @@ namespace Assets.Scripts {
         result.Encapsulate(bounds.min);
         result.Encapsulate(bounds.max);
       }
+
+      /*var bounds1 = GetTotalColliderBounds(objectTransform);
+      result.Encapsulate(bounds1.min);
+      result.Encapsulate(bounds1.max);
+      */
+/*
+      foreach (Transform transform in objectTransform) {
+        var bounds = GetTotalColliderBounds(transform);
+        result.Encapsulate(bounds.min);
+        result.Encapsulate(bounds.max);
+      }
+      */
       var scaledMin = result.min;
       scaledMin.Scale(objectTransform.localScale);
       result.min = scaledMin;
@@ -96,9 +109,39 @@ namespace Assets.Scripts {
       result.max = scaledMax;
       return result;
     }
+
+    public static Bounds GetTotalColliderBounds(Transform objectTransform) {
+      var meshFilter = objectTransform.GetComponent<Collider>();
+
+      var result = meshFilter != null ? meshFilter.bounds : new Bounds();
+
+      foreach (Transform transform in objectTransform) {
+        var bounds = GetTotalColliderBounds(transform);
+        result.Encapsulate(bounds.min);
+        result.Encapsulate(bounds.max);
+      }
+
+      var scaledMin = result.min;
+      scaledMin.Scale(objectTransform.localScale);
+      result.min = scaledMin;
+      var scaledMax = result.max;
+      scaledMax.Scale(objectTransform.localScale);
+      result.max = scaledMax;
+      return result;
+    }
+
+    public static Bounds GetMaxBounds(GameObject g) {
+      var b = new Bounds(g.transform.position, Vector3.zero);
+      foreach (Renderer r in g.GetComponentsInChildren<Renderer>()) {
+        b.Encapsulate(r.bounds);
+      }
+      return b;
+    }
+
   }
 
-  public class Pair<T1, T2> {
+
+public class Pair<T1, T2> {
     public T1 First { get; private set; }
     public T2 Second { get; private set; }
     internal Pair(T1 first, T2 second) {
