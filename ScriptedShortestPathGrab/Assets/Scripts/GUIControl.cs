@@ -16,25 +16,38 @@ public class GUIControl : MonoBehaviour {
   public Text t_gripper_target_distance;
   public Text t_iterations;
   public Text t_obstacle_num;
-  public Text t_wating;
-  public Text t_status;
+  public Text t_waiting;
+
+  [Space]
+  [Header("State Panel")]
+  public Text gripper_state;
+  public Text env_state;
+  public Text pf_state;
+  public Text target_state;
+  public Text claw1_state;
+  public Text claw2_state;
 
   public Slider s_distance;
   public Slider s_obstacle;
 
   void Start() {
-    pf = GameObject.Find("Gripper").GetComponent<Gripper>();
+    pf = GameObject.FindObjectOfType<Gripper>();
     t_gripper_target_distance.text = s_distance.value.ToString("0.00");
     t_obstacle_num.text = s_obstacle.value.ToString();
-    t_wating.text = "";
+    t_waiting.text = "";
   }
 
   void Update() {
-    t_status.text = pf._states.CurrentGripperState.ToString();
-    if (pf._states.CurrentPathFindingState == States.PathFindingState.Idling) {
-      t_wating.text = "Detecting movement\nWaiting...";
+    gripper_state.text = pf._state.GripperState.ToString();
+    env_state.text = pf._state.ObstructionMotionState.ToString();
+    pf_state.text = pf._state.PathFindingState.ToString();
+    target_state.text = pf._state.TargetState.ToString();
+    claw1_state.text = pf._state.Claw1State.ToString();
+    claw2_state.text = pf._state.Claw2State.ToString();
+    if (pf._state.PathFindingState == PathFindingState.WaitingForTarget) {
+      t_waiting.text = "Detecting movement\nWaiting...";
     } else {
-      t_wating.text = "";
+      t_waiting.text = "";
     }
   }
 

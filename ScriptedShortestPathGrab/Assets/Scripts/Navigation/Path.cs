@@ -16,7 +16,7 @@ namespace Assets.Scripts {
       _target_position = target_position;
       _path_list = path_list;
       _bezier_curve = game_object.GetComponent<BezierCurve>();
-      CurvifyPath(_path_list[_path_list.Count-1]);
+      CurvifyPath(_path_list[_path_list.Count - 1]);
     }
 
     private void CurvifyPath(Vector3 target_point) {

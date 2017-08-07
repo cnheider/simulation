@@ -7,44 +7,42 @@ using System.Text;
 public class RecordTrainingData : MonoBehaviour {
 
   public Material _material;
-  public bool deleteFileContent = false;
-  Transform gripper;
-  string file_path_pos_rot = @"C:\TrainingData\posRot.csv";
-  string[][] transform_output;
+  public bool _deleteFileContent = false;
+  Gripper _gripper;
+  string _file_path_pos_rot = @"C:\TrainingData\posRot.csv";
+  string[][] _transform_output;
 
-  void Start () {
-    gripper = GameObject.Find("Gripper").transform;
+  void Start() {
+    _gripper = GameObject.FindObjectOfType<Gripper>();
     GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
 
-    if (!File.Exists(file_path_pos_rot)) {
-      print("Created file/path: " + file_path_pos_rot);
-      File.Create(file_path_pos_rot);
+    if (!File.Exists(_file_path_pos_rot)) {
+      print("Created file/path: " + _file_path_pos_rot);
+      File.Create(_file_path_pos_rot);
     }
-    if (deleteFileContent) {
-      File.WriteAllText(file_path_pos_rot, "");
-      deleteFileContent = false;
+    if (_deleteFileContent) {
+      File.WriteAllText(_file_path_pos_rot, "");
+      _deleteFileContent = false;
     }
   }
 
 
-  void LateUpdate () {
-    
-
-    RecordTransform(transform);
-    SaveToCSV(file_path_pos_rot);
-    //GetData();
+  void LateUpdate() {
+    RecordTransform(_gripper.transform);
+    SaveToCSV(_file_path_pos_rot);
+    GetData();
   }
 
   private void RecordTransform(Transform current_transform) {
-    transform_output = new string[][] {
-      
+    _transform_output = new string[][] {
+
       new string[]{
-        gripper.position.x.ToString("0.000000"),
-        gripper.position.y.ToString("0.000000"),
-        gripper.position.z.ToString("0.000000"),
-        gripper.eulerAngles.x.ToString("0.000000"),
-        gripper.eulerAngles.y.ToString("0.000000"),
-        gripper.eulerAngles.z.ToString("0.000000")
+        current_transform.position.x.ToString("0.000000"),
+        current_transform.position.y.ToString("0.000000"),
+        current_transform.position.z.ToString("0.000000"),
+        current_transform.eulerAngles.x.ToString("0.000000"),
+        current_transform.eulerAngles.y.ToString("0.000000"),
+        current_transform.eulerAngles.z.ToString("0.000000")
       }};
   }
 
@@ -53,12 +51,11 @@ public class RecordTrainingData : MonoBehaviour {
     string delimiter = ", ";
 
     StringBuilder sb = new StringBuilder();
-    
-    for (int index = 0; index < transform_output.GetLength(0); index++)
-      sb.AppendLine(string.Join(delimiter, transform_output[index]));
+
+    for (int index = 0; index < _transform_output.GetLength(0); index++)
+      sb.AppendLine(string.Join(delimiter, _transform_output[index]));
 
     File.AppendAllText(filePath, sb.ToString());
-
   }
 
 

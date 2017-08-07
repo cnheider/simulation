@@ -44,20 +44,20 @@ public class ObstacleSpawner : MonoBehaviour {
   GameObject _cube;
   GameObject _sphere;
 
-  void Start () {
+  void Start() {
     Setup();
   }
 
   void TearDown() {
-    if(_cube)
+    if (_cube)
       DestroyImmediate(_cube);
-    if(_sphere)
+    if (_sphere)
       DestroyImmediate(_sphere);
-    if(_obstacles != null && _obstacles.Length > 0)
+    if (_obstacles != null && _obstacles.Length > 0)
       RemoveObstacles();
   }
 
-  void Setup() {
+  public void Setup() {
     TearDown();
     y_centerPoint = this.transform.position.y;
     _obstacles = new GameObject[number_of_cubes + number_of_spheres];
@@ -85,7 +85,7 @@ public class ObstacleSpawner : MonoBehaviour {
 
   void Update() {
     if (visualize_grid)
-      Utilities.DrawRect(x_size,y_size,z_size, this.transform.position, Color.red);
+      Utilities.DrawRect(x_size, y_size, z_size, this.transform.position, Color.red);
   }
 
   public void SpawnObstacles(float cubeNum = 1, float sphereNum = 1) {
@@ -96,7 +96,7 @@ public class ObstacleSpawner : MonoBehaviour {
       for (int i = 0; i < cubeNum; i++) {
         float temp = Random.Range(-scaling_factor, scaling_factor);
         //spawn_pos = new Vector3(Random.Range(x_min, x_max), Random.Range(y_min, y_max), Random.Range(z_min, z_max));
-        spawn_pos = new Vector3(Random.Range(-x_size/2, x_size / 2), Random.Range(-y_size/2 + y_centerPoint, y_size / 2 + y_centerPoint), Random.Range(-z_size/2, z_size / 2));
+        spawn_pos = new Vector3(Random.Range(-x_size / 2, x_size / 2), Random.Range(-y_size / 2 + y_centerPoint, y_size / 2 + y_centerPoint), Random.Range(-z_size / 2, z_size / 2));
         GameObject cube_clone = Instantiate(_cube, spawn_pos, Quaternion.identity);
         cube_clone.transform.localScale = new Vector3(sphere_size + temp, sphere_size + temp, sphere_size + temp);
         cube_clone.SetActive(true);
@@ -114,7 +114,7 @@ public class ObstacleSpawner : MonoBehaviour {
       for (int i = 0; i < sphereNum; i++) {
         float temp = Random.Range(-scaling_factor, scaling_factor);
         //spawn_pos = new Vector3(Random.Range(x_min, x_max), Random.Range(y_min, y_max), Random.Range(z_min, z_max));
-        spawn_pos = new Vector3(Random.Range(-x_size/2, x_size / 2), Random.Range(-y_size/2 + y_centerPoint, y_size/2 + y_centerPoint), Random.Range(-z_size/2, z_size / 2));
+        spawn_pos = new Vector3(Random.Range(-x_size / 2, x_size / 2), Random.Range(-y_size / 2 + y_centerPoint, y_size / 2 + y_centerPoint), Random.Range(-z_size / 2, z_size / 2));
         GameObject sphere_clone = Instantiate(_sphere, spawn_pos, Quaternion.identity);
         sphere_clone.transform.localScale = new Vector3(sphere_size + temp, sphere_size + temp, sphere_size + temp);
         sphere_clone.SetActive(true);
@@ -130,7 +130,7 @@ public class ObstacleSpawner : MonoBehaviour {
   }
 
   void RemoveObstacles() {
-    foreach(GameObject obstacle in _obstacles) {
+    foreach (GameObject obstacle in _obstacles) {
       DestroyImmediate(obstacle);
     }
   }

@@ -3,11 +3,14 @@ using Assets.Scripts.Grasping;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class GrabableObject : MonoBehaviour {
-  public bool _grabs_visible = true;
+public class GraspableObject : MonoBehaviour, MotionTracker {
+  public bool _draw_grasp = true;
   private Vector3 _previous_position;
   private Quaternion _previous_rotation;
+  private Vector3 _last_recorded_move;
+  private Quaternion _last_recorded_rotation;
 
   [Space(1)]
   [Header("Scalars")]
@@ -19,8 +22,15 @@ public class GrabableObject : MonoBehaviour {
     _previous_rotation = this.transform.rotation;
   }
 
+  private void UpdateLastRecordedTranform() {
+    _last_recorded_move = this.transform.position;
+    _last_recorded_rotation = this.transform.rotation;
+  }
+
+
   void Start() {
     UpdatePreviousTranform();
+    UpdateLastRecordedTranform();
     //SetVisiblity(false);
   }
 
@@ -34,18 +44,18 @@ public class GrabableObject : MonoBehaviour {
   }
 
   void SetVisiblity(bool visible) {
-    foreach(Grasp grab in GetGrasps()) {
+    foreach (Grasp grab in GetGrasps()) {
       grab.gameObject.SetActive(visible);
     }
   }
 
-  public bool IsMoving() {
+  public bool IsInMotion() {
     return this.transform.position != _previous_position || this.transform.rotation != _previous_rotation;
   }
 
   private void ChangeIndicatorColor(Grasp grasp, Color color) {
     foreach (var child in grasp.GetComponentsInChildren<MeshRenderer>()) {
-        child.material.SetColor("_Color1", color);
+      child.material.SetColor("_Color1", color);
     }
   }
 
@@ -55,7 +65,7 @@ public class GrabableObject : MonoBehaviour {
     var grasps = GetGrasps();
     List<Grasp> unobstructed_grasps = new List<Grasp>();
 
-    foreach(var grasp in grasps) {
+    foreach (var grasp in grasps) {
       if (!grasp.IsObstructed()) {
         unobstructed_grasps.Add(grasp);
         ChangeIndicatorColor(grasp, Color.yellow);
@@ -67,7 +77,7 @@ public class GrabableObject : MonoBehaviour {
     float shortest_distance = float.MaxValue;
     foreach (var grasp in unobstructed_grasps) {
       var distance = Vector3.Distance(grasp.transform.position, gripper.transform.position);
-      if ( distance <= shortest_distance) {
+      if (distance <= shortest_distance) {
         shortest_distance = distance;
         optimal_grasp = grasp;
       }
@@ -158,29 +168,40 @@ public class GrabableObject : MonoBehaviour {
 
     return grab_dict;
   }
-  /*
-  //Orientation (normal to floor) - Score
-  //----OBSOLETE----//
-  List<int> OrientationScore(List<int> score_list) {
 
-    int index = 0;
-    RaycastHit ray_hit;
-
-    foreach (Transform grab_vector in GetGrabs()) {
-      if (Physics.Raycast(grab_vector.position, grab_vector.right, out ray_hit, proximity_radius)) {
-        if (ray_hit.transform.name == "Floor") {
-          score_list[index] += good_ori;
-        }
-      } else if (Physics.Raycast(grab_vector.position, -grab_vector.right, out ray_hit, proximity_radius)) {
-        if (ray_hit.transform.name == "Floor") {
-          score_list[index] += good_ori;
-        }
-      } else {
-        score_list[index] += bad_ori;
-      }
-      index++;
+  public bool IsInMotion(float sensitivity) {
+    var distance_moved = Vector3.Distance(this.transform.position, _last_recorded_move);
+    var angle_rotated = Quaternion.Angle(this.transform.rotation, _last_recorded_rotation);
+    if (distance_moved > sensitivity || angle_rotated > sensitivity) {
+      UpdateLastRecordedTranform();
+      return true;
+    } else {
+      return false;
     }
-    return score_list;
-  }*/
+  }
+  /*
+//Orientation (normal to floor) - Score
+//----OBSOLETE----//
+List<int> OrientationScore(List<int> score_list) {
+
+ int index = 0;
+ RaycastHit ray_hit;
+
+ foreach (Transform grab_vector in GetGrabs()) {
+   if (Physics.Raycast(grab_vector.position, grab_vector.right, out ray_hit, proximity_radius)) {
+     if (ray_hit.transform.name == "Floor") {
+       score_list[index] += good_ori;
+     }
+   } else if (Physics.Raycast(grab_vector.position, -grab_vector.right, out ray_hit, proximity_radius)) {
+     if (ray_hit.transform.name == "Floor") {
+       score_list[index] += good_ori;
+     }
+   } else {
+     score_list[index] += bad_ori;
+   }
+   index++;
+ }
+ return score_list;
+}*/
 
 }
