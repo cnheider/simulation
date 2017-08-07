@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 using System.Text;
 
@@ -9,28 +7,35 @@ public class RecordTrainingData : MonoBehaviour {
   public Material _material;
   public bool _deleteFileContent = false;
   Gripper _gripper;
-  string _file_path_pos_rot = @"C:\TrainingData\posRot.csv";
+  string _file_path = @"C:\TrainingData\";
+  string _file_path_pos_rot = @"pos_rot.csv";
+  string _file_path_images = @"images\";
   string[][] _transform_output;
 
+  int _i=0;
+
   void Start() {
-    _gripper = GameObject.FindObjectOfType<Gripper>();
+    _gripper = FindObjectOfType<Gripper>();
     GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
 
-    if (!File.Exists(_file_path_pos_rot)) {
-      print("Created file/path: " + _file_path_pos_rot);
-      File.Create(_file_path_pos_rot);
+    File.WriteAllText(_file_path + _file_path_pos_rot, "");
+
+    /*if (!File.Exists(_file_path + _file_path_pos_rot)) {
+      print("Created file/path: " + _file_path + _file_path_pos_rot);
+      //File.Create(_file_path + _file_path_pos_rot);
     }
     if (_deleteFileContent) {
-      File.WriteAllText(_file_path_pos_rot, "");
+      File.WriteAllText(_file_path + _file_path_pos_rot, "");
       _deleteFileContent = false;
-    }
+    }*/
   }
 
 
-  void LateUpdate() {
+  void Update() {
     RecordTransform(_gripper.transform);
-    SaveToCSV(_file_path_pos_rot);
-    GetData();
+    SaveToCSV(_file_path + _file_path_pos_rot);
+    SaveBytesToFile(GetData(), _file_path+ _file_path_images+_i.ToString()+".png");
+    _i++;
   }
 
   private void RecordTransform(Transform current_transform) {
@@ -46,6 +51,10 @@ public class RecordTrainingData : MonoBehaviour {
       }};
   }
 
+  void SaveBytesToFile(byte[] bytes, string filename) {
+    File.WriteAllBytes(filename, bytes);
+  }
+
   //Writes to file in the format: pos x, pos y, pos z, rot x, rot y, rot z
   void SaveToCSV(string filePath) {
     string delimiter = ", ";
@@ -56,6 +65,11 @@ public class RecordTrainingData : MonoBehaviour {
       sb.AppendLine(string.Join(delimiter, _transform_output[index]));
 
     File.AppendAllText(filePath, sb.ToString());
+
+    //using (StreamWriter sw = File.AppendText(filePath)) {
+    //  sw.WriteLine(sb.ToString());
+    //}
+
   }
 
 
