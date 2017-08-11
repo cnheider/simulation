@@ -85,7 +85,8 @@ public class Gripper : MonoBehaviour {
     switch (state.PathFindingState) {
       case PathFindingState.WaitingForTarget:
         FindTargetAndUpdatePath();
-        state.NavigateToTarget();
+        if(_target_grasp != null)
+          state.NavigateToTarget();
         break;
 
       case PathFindingState.Navigating:
@@ -181,8 +182,10 @@ public class Gripper : MonoBehaviour {
 
   private void MaybeBeginReleaseProcedure() {
     if (Vector3.Distance(this.transform.position, _reset_position) < _precision) {
-      _target_game_object.transform.parent = null;
-      if(_state.IsTargetGrabbed()) Destroy(_target_game_object.gameObject);
+      if (_target_game_object) {
+        _target_game_object.transform.parent = null;
+        if(_state.IsTargetGrabbed()) Destroy(_target_game_object.gameObject);
+      }
       _state.OpenClaw();
       _state.WaitForTarget();
 
@@ -349,11 +352,11 @@ public class Gripper : MonoBehaviour {
 
   public void FindTargetAndUpdatePath() {
     var pair = GetOptimalTargetAndGrasp();
-    /*if (pair == null || pair.First == null || pair.Second == null) {
+    if (pair == null || pair.First == null || pair.Second == null) {
       _state.PathFindingState = PathFindingState.Returning;
       _path = FindPath(this.transform.position, _reset_position);
       return;
-    }*/
+    }
     _target_game_object = pair.First;
     _target_grasp = pair.Second;
     _approach_position = _target_grasp.transform.position - (_target_grasp.transform.forward * _approach_distance);

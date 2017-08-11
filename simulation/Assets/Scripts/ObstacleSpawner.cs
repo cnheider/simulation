@@ -11,12 +11,14 @@ public class ObstacleSpawner : MonoBehaviour {
   public float cube_size = 0.2f;
   [Range(1, 20)]
   public int number_of_cubes = 1;
+  public Material _material_cube;
 
   [Header("Sphere")]
   public bool spawn_spheres = true;
   public float sphere_size = 0.2f;
   [Range(1, 20)]
   public int number_of_spheres = 1;
+  public Material _material_sphere;
 
   [Header("Spawn random number of objects?")]
   public bool random_obj_num = false;
@@ -32,7 +34,7 @@ public class ObstacleSpawner : MonoBehaviour {
   [Range(0.10f, 5.00f)]
   public float z_size = 1.4f;
 
-  [Header("Show obstacle spawn grid?")]
+  [Header("Show obstacle spawn box?")]
   public bool visualize_grid = true;
 
   [Space]
@@ -64,9 +66,11 @@ public class ObstacleSpawner : MonoBehaviour {
     _cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
     _cube.SetActive(false);
     _cube.AddComponent<Obstruction>();
+    _cube.GetComponent<MeshRenderer>().material = _material_cube;
     _sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
     _sphere.SetActive(false);
     _sphere.AddComponent<Obstruction>();
+    _sphere.GetComponent<MeshRenderer>().material = _material_sphere;
     if (scaling_factor > 0.3f || scaling_factor < -0.3f) {
       scaling_factor = 0.3f;
     }
