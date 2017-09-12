@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Assets.Scripts;
 using Assets.Scripts.Grasping;
+using System.Collections;
 
 public class Gripper : MonoBehaviour {
 
@@ -184,7 +185,7 @@ public class Gripper : MonoBehaviour {
     if (Vector3.Distance(this.transform.position, _reset_position) < _precision) {
       if (_target_game_object) {
         _target_game_object.transform.parent = null;
-        if(_state.IsTargetGrabbed()) Destroy(_target_game_object.gameObject);
+        //if(_state.IsTargetGrabbed()) Destroy(_target_game_object.gameObject);
       }
       _state.OpenClaw();
       _state.WaitForTarget();
@@ -226,7 +227,25 @@ public class Gripper : MonoBehaviour {
 
   private void OpenClaws(float step_size) {
     _motor.transform.localPosition = Vector3.MoveTowards(_motor.transform.localPosition, _default_motor_position, step_size/8);
+    //StopCoroutine ("claw_movement");
+    //StartCoroutine ("claw_movement", OpenClaws1 ());
   }
+
+  private IEnumerator OpenClaws1(){
+    while (!_state.IsTargetGrabbed()){
+      _motor.transform.localPosition = Vector3.MoveTowards(_motor.transform.localPosition, _default_motor_position, Time.deltaTime);
+      yield return null; // new WaitForSeconds(waitTime);
+    }
+  }
+
+  private IEnumerator CloseClaws1(){
+    while (!_state.IsTargetGrabbed()){
+			_motor.transform.localPosition = Vector3.MoveTowards(_motor.transform.localPosition, _closed_motor_position, Time.deltaTime);
+      yield return null; // new WaitForSeconds(waitTime);
+    }
+  }
+
+
 
   #endregion
 
@@ -391,10 +410,37 @@ public class Gripper : MonoBehaviour {
     if (rotate) transform.rotation = Quaternion.RotateTowards(this.transform.rotation, rotation, step_size * 50);
     transform.position = Vector3.MoveTowards(this.transform.position, _intermediate_target, step_size);
   }
+   
 
   #endregion
 
   /*
+   *  
+  public GraspableObject TargetGameObject
+  {
+    get { return _target_game_object; }
+    set
+    {
+      _target_game_object = value;
+
+      StopCoroutine("gripper_movement");
+      StartCoroutine("gripper_movement", FollowPathToApproach1(_target_game_object.transform));
+    }
+  }
+
+  private IEnumerator FollowPathToApproach1(Transform trans){
+    while (true){
+      if ((Vector3.Distance(this.transform.position, _intermediate_target) <= _precision)) {
+        _intermediate_target = _path.Next(1);
+      }
+
+      if (_debug) Debug.DrawRay(_intermediate_target, this.transform.forward, Color.green);
+      transform.position = Vector3.MoveTowards(this.transform.position, _intermediate_target, 1);
+    }
+  }
+
+   * 
+   * 
 public void respawn_obstructions(GripperState state) {
   ObstacleSpawner obstacles_spawner = FindObjectOfType<ObstacleSpawner>();
   obstacles_spawner.SpawnObstacles(obstacles_spawner.number_of_cubes, obstacles_spawner.number_of_spheres);

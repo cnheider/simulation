@@ -30,11 +30,22 @@
 
   half4 frag(v2f i) : COLOR {
     //float depth01 = Linear01Depth(UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv))) * _FarPlane;
-    float depth = UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv));
-  //float depth01 = (depth * _ProjectionParams.z - _ProjectionParams.y) / (_ProjectionParams.z - _ProjectionParams.y);
-  //float depth = tex2D(_CameraDepthTexture, (i.uv)).r * 50;
-  //float depth = UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv)) * 50;
-  half4 color = half4(1 - depth, 1 - depth, 1 - depth, 1);
+    //float depth01 = (depth * _ProjectionParams.z - _ProjectionParams.y) / (_ProjectionParams.z - _ProjectionParams.y);
+    //float depth = tex2D(_CameraDepthTexture, (i.uv)).r * 50;
+    //float depth = UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv)) * 50;
+
+    float depth = tex2D(_CameraDepthTexture, i.uv);
+    #if defined(UNITY_REVERSED_Z)
+      depth = 1.0f - depth;
+    #endif
+
+    //float depth = UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv));
+    //depth = LinearEyeDepth(depth);
+    //depth = Logarithmic01Depth(depth);
+    //depth = Linear01Depth(depth);
+
+    //half4 color = half4(depth, depth, depth, 1);
+    half4 color = half4(1 - depth, 1 - depth, 1 - depth, 1);
   return color;
 }
 ENDCG
