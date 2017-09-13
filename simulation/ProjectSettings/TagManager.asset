@@ -18,6 +18,7 @@ TagManager:
   - Stopper
   - total_collider
   - ignored_by_sub_collider_fish
+  - Floor
   layers:
   - Default
   - TransparentFX
