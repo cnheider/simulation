@@ -5,15 +5,16 @@ using Assets.Scripts.Grasping;
 
 public class RecordTrainingData : MonoBehaviour {
 
-  public Material _material;
   public bool _deleteFileContent = false;
   public Gripper _gripper;
   public Grasp _target;
-  public Camera _camera;
+  public Camera _depth_camera;
+  public Camera _shadow_camera;
   string _file_path = @"training_data/";
   string _file_path_gripper = @"gripper_position_rotation.csv";
   string _file_path_target = @"target_position_rotation.csv";
-  string _file_path_images = @"depth/";
+  string _file_path_depth = @"depth/";
+  string _file_path_shadow = @"shadow/";
 
   int _i = 0;
 
@@ -24,14 +25,15 @@ public class RecordTrainingData : MonoBehaviour {
     if (!_target) {
       _target = FindObjectOfType<Grasp> ();
     }
-    if (!_camera) {
-      _camera = GetComponent<Camera> ();
+    if (!_depth_camera) {
+      _depth_camera = FindObjectOfType<Camera> ();
     }
-    if (!_camera) {
-      _camera = FindObjectOfType<Camera> ();
+    if (_depth_camera) {
+      _depth_camera.depthTextureMode = DepthTextureMode.Depth;
     }
 
-    _camera.depthTextureMode = DepthTextureMode.Depth;
+    //print ("GPU supports depth format: " + SystemInfo.SupportsRenderTextureFormat (RenderTextureFormat.Depth));
+    //print ("GPU supports shadowmap format: " + SystemInfo.SupportsRenderTextureFormat (RenderTextureFormat.Shadowmap));
 
     File.WriteAllText (_file_path + _file_path_gripper, "");
     File.WriteAllText (_file_path + _file_path_target, "");
@@ -47,22 +49,28 @@ public class RecordTrainingData : MonoBehaviour {
   }
 
   void Update () {
-    Vector3 gripper_position_relative_to_camera = this.transform.InverseTransformPoint (_gripper.transform.position);
-    Vector3 gripper_direction_relative_to_camera = this.transform.InverseTransformDirection (_gripper.transform.eulerAngles);
-    var gripper_transform_output = GetTransformOutput (gripper_position_relative_to_camera, gripper_direction_relative_to_camera);
-    SaveToCSV (_file_path + _file_path_gripper, gripper_transform_output);
+    Vector3 screenPoint = _depth_camera.WorldToViewportPoint (_target.transform.position);
+    if (screenPoint.z > 0 && screenPoint.x > 0.1 && screenPoint.x < 0.9 && screenPoint.y > 0.1 && screenPoint.y < 0.9) {
+      Vector3 gripper_position_relative_to_camera = this.transform.InverseTransformPoint (_gripper.transform.position);
+      Vector3 gripper_direction_relative_to_camera = this.transform.InverseTransformDirection (_gripper.transform.eulerAngles);
+      var gripper_transform_output = GetTransformOutput (_i, gripper_position_relative_to_camera, gripper_direction_relative_to_camera);
+      SaveToCSV (_file_path + _file_path_gripper, gripper_transform_output);
 
-    Vector3 target_position_relative_to_camera = this.transform.InverseTransformPoint (_target.transform.position);
-    Vector3 target_direction_relative_to_camera = this.transform.InverseTransformDirection (_target.transform.eulerAngles);
-    var target_transform_output = GetTransformOutput (target_position_relative_to_camera, target_direction_relative_to_camera);
-    SaveToCSV (_file_path + _file_path_target, target_transform_output);
+      Vector3 target_position_relative_to_camera = this.transform.InverseTransformPoint (_target.transform.position);
+      Vector3 target_direction_relative_to_camera = this.transform.InverseTransformDirection (_target.transform.eulerAngles);
+      var target_transform_output = GetTransformOutput (_i, target_position_relative_to_camera, target_direction_relative_to_camera);
+      SaveToCSV (_file_path + _file_path_target, target_transform_output);
 
+      SaveRenderTextureToImage (_i, _depth_camera, _file_path_depth);
+      SaveRenderTextureToImage (_i, _shadow_camera, _file_path_shadow);
 
-    SaveDepthImage ();
+      _i++;
+    }
   }
 
-  string[] GetTransformOutput(Vector3 pos, Vector3 dir){
+  string[] GetTransformOutput(int id, Vector3 pos, Vector3 dir){
     return new string[] {
+        id.ToString (),
         pos.x.ToString ("0.000000"),
         pos.y.ToString ("0.000000"),
         pos.z.ToString ("0.000000"),
@@ -93,18 +101,13 @@ public class RecordTrainingData : MonoBehaviour {
   }
 
 
-  public void SaveDepthImage() {
-    var texture2d = RenderTextureImage (_camera);
+  public void SaveRenderTextureToImage(int id, Camera camera, string file_name_dd) {
+    var texture2d = RenderTextureImage (camera);
     var data = texture2d.EncodeToPNG ();
-    string file_name = _file_path + _file_path_images + _i.ToString();
+    string file_name = _file_path + file_name_dd + id.ToString();
     //SaveTextureAsArray (camera, texture2d, file_name+".ssv");
     SaveBytesToFile (data, file_name + ".png");
-    _i++;
     //return data;
-  }
-
-  void OnRenderImage (RenderTexture source, RenderTexture destination) {
-    Graphics.Blit (source, destination, _material);
   }
 
   public static Texture2D RenderTextureImage (Camera camera) { // From unity documentation, https://docs.unity3d.com/ScriptReference/Camera.Render.html

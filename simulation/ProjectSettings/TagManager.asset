@@ -19,6 +19,7 @@ TagManager:
   - total_collider
   - ignored_by_sub_collider_fish
   - Floor
+  - CameraBody
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - Hand
   - Floor
   - total_collider
-  - 
+  - CameraBody
   - 
   - 
   - 
