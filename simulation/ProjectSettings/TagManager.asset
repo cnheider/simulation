@@ -20,6 +20,10 @@ TagManager:
   - ignored_by_sub_collider_fish
   - Floor
   - CameraBody
+  - Chair
+  - Table
+  - Wall
+  - Teapot
   layers:
   - Default
   - TransparentFX
@@ -37,7 +41,7 @@ TagManager:
   - CameraBody
   - InfraredSpectrum
   - NaturalLightSpectrum
-  - 
+  - Chair
   - 
   - 
   - 
