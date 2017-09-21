@@ -1,4 +1,4 @@
-﻿Shader "Custom/QuickBlur"
+﻿Shader "Custom/CompositeAdd"
 {
 	Properties
 	{

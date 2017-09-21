@@ -9,14 +9,20 @@ public class RecordTrainingData : MonoBehaviour {
   public Gripper _gripper;
   public Grasp _target;
   public Camera _depth_camera;
-  public Camera _shadow_camera;
+  public Camera _infrared_shadow_camera;
+  public Camera _rgb_camera;
+  public Camera _segmentation_camera;
+  public int _episode_lenght = 1000;
   string _file_path = @"training_data/";
   string _file_path_gripper = @"gripper_position_rotation.csv";
   string _file_path_target = @"target_position_rotation.csv";
   string _file_path_depth = @"depth/";
-  string _file_path_shadow = @"shadow/";
+  string _file_path_infrared_shadow = @"infrared_shadow/";
+  string _file_path_rgb = @"rgb/";
+  string _file_path_segmentation = @"segmentation/";
 
   int _i = 0;
+  int _current_episode_progress = 0;
 
   void Start () {
     if (!_gripper) {
@@ -29,7 +35,7 @@ public class RecordTrainingData : MonoBehaviour {
       _depth_camera = FindObjectOfType<Camera> ();
     }
     if (_depth_camera) {
-      _depth_camera.depthTextureMode = DepthTextureMode.Depth;
+      //_depth_camera.depthTextureMode = DepthTextureMode.Depth;
     }
 
     //print ("GPU supports depth format: " + SystemInfo.SupportsRenderTextureFormat (RenderTextureFormat.Depth));
@@ -49,23 +55,29 @@ public class RecordTrainingData : MonoBehaviour {
   }
 
   void Update () {
-    Vector3 screenPoint = _depth_camera.WorldToViewportPoint (_target.transform.position);
-    if (screenPoint.z > 0 && screenPoint.x > 0.1 && screenPoint.x < 0.9 && screenPoint.y > 0.1 && screenPoint.y < 0.9) {
-      Vector3 gripper_position_relative_to_camera = this.transform.InverseTransformPoint (_gripper.transform.position);
-      Vector3 gripper_direction_relative_to_camera = this.transform.InverseTransformDirection (_gripper.transform.eulerAngles);
-      var gripper_transform_output = GetTransformOutput (_i, gripper_position_relative_to_camera, gripper_direction_relative_to_camera);
-      SaveToCSV (_file_path + _file_path_gripper, gripper_transform_output);
+    if (_current_episode_progress == _episode_lenght - 1) {
+      Vector3 screenPoint = _depth_camera.WorldToViewportPoint (_target.transform.position);
+      if (screenPoint.z > 0 && screenPoint.x > 0.1 && screenPoint.x < 0.9 && screenPoint.y > 0.1 && screenPoint.y < 0.9) {
+        Vector3 gripper_position_relative_to_camera = this.transform.InverseTransformPoint (_gripper.transform.position);
+        Vector3 gripper_direction_relative_to_camera = this.transform.InverseTransformDirection (_gripper.transform.eulerAngles);
+        var gripper_transform_output = GetTransformOutput (_i, gripper_position_relative_to_camera, gripper_direction_relative_to_camera);
+        SaveToCSV (_file_path + _file_path_gripper, gripper_transform_output);
 
-      Vector3 target_position_relative_to_camera = this.transform.InverseTransformPoint (_target.transform.position);
-      Vector3 target_direction_relative_to_camera = this.transform.InverseTransformDirection (_target.transform.eulerAngles);
-      var target_transform_output = GetTransformOutput (_i, target_position_relative_to_camera, target_direction_relative_to_camera);
-      SaveToCSV (_file_path + _file_path_target, target_transform_output);
+        Vector3 target_position_relative_to_camera = this.transform.InverseTransformPoint (_target.transform.position);
+        Vector3 target_direction_relative_to_camera = this.transform.InverseTransformDirection (_target.transform.eulerAngles);
+        var target_transform_output = GetTransformOutput (_i, target_position_relative_to_camera, target_direction_relative_to_camera);
+        SaveToCSV (_file_path + _file_path_target, target_transform_output);
 
-      SaveRenderTextureToImage (_i, _depth_camera, _file_path_depth);
-      SaveRenderTextureToImage (_i, _shadow_camera, _file_path_shadow);
+        SaveRenderTextureToImage (_i, _depth_camera, _file_path_depth);
+        SaveRenderTextureToImage (_i, _infrared_shadow_camera, _file_path_infrared_shadow);
+        SaveRenderTextureToImage (_i, _rgb_camera, _file_path_rgb);
+        SaveRenderTextureToImage (_i, _segmentation_camera, _file_path_segmentation);
 
-      _i++;
+        _i++;
+      }
+      _current_episode_progress = 0;
     }
+    _current_episode_progress++;
   }
 
   string[] GetTransformOutput(int id, Vector3 pos, Vector3 dir){

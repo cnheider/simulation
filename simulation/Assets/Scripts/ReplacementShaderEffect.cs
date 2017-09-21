@@ -10,6 +10,7 @@ public class ReplacementShaderEffect : MonoBehaviour {
 
   void OnValidate () {
     Shader.SetGlobalColor ("_OverDrawColor", OverDrawColor);
+    Shader.SetGlobalColor ("_SegmentationColor", OverDrawColor);
   }
 
   void OnEnable () {

@@ -35,8 +35,8 @@ TagManager:
   - Floor
   - total_collider
   - CameraBody
-  - 
-  - 
+  - InfraredSpectrum
+  - NaturalLightSpectrum
   - 
   - 
   - 
