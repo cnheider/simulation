@@ -1,23 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 [ExecuteInEditMode]
 public class ChangeMaterialOnRenderByTag : MonoBehaviour {
-
-  [Serializable]
-  public struct TagColor {
-    public string tag;
-    public Color color;
-  }
-
+ 
   public bool _use_shared_materials = false;
-  public TagColor[] _tag_colors_array;
+  public SegmentationColorByTag[] _colors_by_tag;
 
   Dictionary<string, Color> _tag_colors;
-  Color[] _original_colors;
+  LinkedList<Color>[] _original_colors;
   Renderer[] _all_renders;
+
+  public SegmentationColorByTag[] SegmentationColorsByTag{
+    get{ return _colors_by_tag; }
+  }
 
 	// Use this for initialization
 	void Start () {
@@ -32,21 +29,29 @@ public class ChangeMaterialOnRenderByTag : MonoBehaviour {
     _all_renders = FindObjectsOfType<Renderer>();
 
     _tag_colors = new Dictionary<string, Color> ();
-    foreach (var tag_color in _tag_colors_array) {
+    foreach (var tag_color in _colors_by_tag) {
       _tag_colors.Add (tag_color.tag, tag_color.color);
     }
   }
 
   void Change(){
-    _original_colors = new Color[_all_renders.Length];
+    _original_colors = new LinkedList<Color>[_all_renders.Length];
+    for( int i = 0; i < _original_colors.Length; i++ ) {
+      _original_colors[i] = new LinkedList<Color>();
+    }
+
     for (int i = 0; i < _all_renders.Length; i++) {
       if(_tag_colors.ContainsKey(_all_renders[i].tag)){
         if (_use_shared_materials) {
-          _original_colors [i] = _all_renders [i].sharedMaterial.color;
-          _all_renders [i].sharedMaterial.color = _tag_colors [_all_renders [i].tag];
+            foreach (var mat in _all_renders[i].sharedMaterials) {
+              _original_colors [i].AddFirst (mat.color);
+              mat.color = _tag_colors [_all_renders [i].tag];
+            }
         } else {
-          _original_colors [i] = _all_renders [i].material.color;
-          _all_renders [i].material.color = _tag_colors [_all_renders [i].tag];
+          foreach (var mat in _all_renders[i].materials) {
+            _original_colors [i].AddFirst (mat.color);
+            mat.color = _tag_colors [_all_renders [i].tag];
+          }
         }
       }
     }
@@ -55,9 +60,15 @@ public class ChangeMaterialOnRenderByTag : MonoBehaviour {
     for (int i = 0; i < _all_renders.Length; i++) {
       if (_tag_colors.ContainsKey (_all_renders [i].tag)){
         if (_use_shared_materials) {
-          _all_renders [i].sharedMaterial.color = _original_colors [i];
+            foreach (var mat in _all_renders[i].sharedMaterials) {
+              mat.color = _original_colors [i].Last.Value;
+              _original_colors [i].RemoveLast ();
+            }
         } else {
-          _all_renders [i].material.color = _original_colors [i];
+          foreach (var mat in _all_renders[i].materials) {
+            mat.color = _original_colors [i].Last.Value;
+            _original_colors [i].RemoveLast ();
+          }
         }
       }
     }

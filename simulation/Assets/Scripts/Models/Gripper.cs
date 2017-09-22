@@ -318,7 +318,7 @@ public class Gripper : MonoBehaviour {
     }
 
     var other_maybe_graspable = other_game_object.GetComponentInParent<GraspableObject>();
-      if (other_maybe_graspable && other_maybe_graspable.tag != "FishPart") {
+    if (other_maybe_graspable && other_maybe_graspable.tag != "FishPart") {
         if (child_game_object.name == _grab_region.name && other_maybe_graspable.name == _target_game_object.name) {
           _state.TargetIsOutsideRegion();
         }
