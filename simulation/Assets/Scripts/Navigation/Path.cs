@@ -1,25 +1,29 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Assets.Scripts {
+
+  [Serializable]
   class Path {
 
     public Vector3 _start_position;
     public Vector3 _target_position;
     private List<Vector3> _path_list;
-    private float _progress = 0.0f;
+    private float _progress = 0f;
 
     private BezierCurve _bezier_curve;
 
-    public Path(Vector3 start_position, Vector3 target_position, GameObject game_object, List<Vector3> path_list) {
+    public Path(Vector3 start_position, Vector3 target_position, BezierCurve game_object, List<Vector3> path_list) {
       _start_position = start_position;
       _target_position = target_position;
       _path_list = path_list;
-      _bezier_curve = game_object.GetComponent<BezierCurve>();
-      CurvifyPath(_path_list[_path_list.Count - 1]);
+      _bezier_curve = game_object;
+      //CurvifyPath(_path_list[_path_list.Count - 1]);
+      CurvifyPath();
     }
 
-    private void CurvifyPath(Vector3 target_point) {
+    private void CurvifyPath() {
       for (int i = 0; i < _bezier_curve.pointCount; i++) {
         GameObject.Destroy(_bezier_curve[i].gameObject);
       }
@@ -27,7 +31,7 @@ namespace Assets.Scripts {
       for (int i = 0; i < _path_list.Count; i++) {
         _bezier_curve.AddPointAt(_path_list[i]);
       }
-      _bezier_curve.AddPointAt(target_point);
+      //_bezier_curve.AddPointAt(target_point);
       SetHandlePosition(_bezier_curve);
     }
 

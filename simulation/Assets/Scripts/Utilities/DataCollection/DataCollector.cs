@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Assets.Scripts.Grasping;
 
-public class RecordTrainingData : MonoBehaviour {
+public class DataCollector : MonoBehaviour {
 
   public bool _deleteFileContent = false;
   public Gripper _gripper;
@@ -12,7 +12,7 @@ public class RecordTrainingData : MonoBehaviour {
   public Camera _infrared_shadow_camera;
   public Camera _rgb_camera;
   public Camera _segmentation_camera;
-  public int _episode_lenght = 1000;
+  public int _episode_length = 100; // Sampling rate
   string _file_path = @"training_data/";
   string _file_path_gripper = @"gripper_position_rotation.csv";
   string _file_path_target = @"target_position_rotation.csv";
@@ -41,8 +41,8 @@ public class RecordTrainingData : MonoBehaviour {
     //print ("GPU supports depth format: " + SystemInfo.SupportsRenderTextureFormat (RenderTextureFormat.Depth));
     //print ("GPU supports shadowmap format: " + SystemInfo.SupportsRenderTextureFormat (RenderTextureFormat.Shadowmap));
 
-    File.WriteAllText (_file_path + _file_path_gripper, "");
-    File.WriteAllText (_file_path + _file_path_target, "");
+    File.WriteAllText (_file_path + _file_path_gripper, "frame, x, y, z, rot_x, rot_y, rot_z\n");
+    File.WriteAllText (_file_path + _file_path_target, "frame, x, y, z, rot_x, rot_y, rot_z\n");
 
     /*if (!File.Exists(_file_path + _file_path_pos_rot)) {
       print("Created file/path: " + _file_path + _file_path_pos_rot);
@@ -54,10 +54,10 @@ public class RecordTrainingData : MonoBehaviour {
     }*/
   }
 
-  void Update () {
-    if (_current_episode_progress == _episode_lenght - 1) {
+  void FixedUpdate () {
+    if (_current_episode_progress == _episode_length - 1) {
       Vector3 screenPoint = _depth_camera.WorldToViewportPoint (_target.transform.position);
-      if (screenPoint.z > 0 && screenPoint.x > 0.1 && screenPoint.x < 0.9 && screenPoint.y > 0.1 && screenPoint.y < 0.9) {
+      //if (screenPoint.z > 0 && screenPoint.x > 0.1 && screenPoint.x < 0.9 && screenPoint.y > 0.1 && screenPoint.y < 0.9) {
         Vector3 gripper_position_relative_to_camera = this.transform.InverseTransformPoint (_gripper.transform.position);
         Vector3 gripper_direction_relative_to_camera = this.transform.InverseTransformDirection (_gripper.transform.eulerAngles);
         var gripper_transform_output = GetTransformOutput (_i, gripper_position_relative_to_camera, gripper_direction_relative_to_camera);
@@ -74,7 +74,7 @@ public class RecordTrainingData : MonoBehaviour {
         SaveRenderTextureToImage (_i, _segmentation_camera, _file_path_segmentation);
 
         _i++;
-      }
+      //}
       _current_episode_progress = 0;
     }
     _current_episode_progress++;

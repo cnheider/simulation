@@ -29,8 +29,12 @@ public class ChangeMaterialOnRenderByTag : MonoBehaviour {
     _all_renders = FindObjectsOfType<Renderer>();
 
     _tag_colors = new Dictionary<string, Color> ();
-    foreach (var tag_color in _colors_by_tag) {
-      _tag_colors.Add (tag_color.tag, tag_color.color);
+    if (_colors_by_tag.Length > 0) {
+      foreach (var tag_color in _colors_by_tag) {
+        if (!_tag_colors.ContainsKey (tag_color.tag)) {
+          _tag_colors.Add (tag_color.tag, tag_color.color);
+        }
+      }
     }
   }
 
@@ -47,12 +51,22 @@ public class ChangeMaterialOnRenderByTag : MonoBehaviour {
               _original_colors [i].AddFirst (mat.color);
               mat.color = _tag_colors [_all_renders [i].tag];
             }
-        } else {
+        
+        }else{
           foreach (var mat in _all_renders[i].materials) {
             _original_colors [i].AddFirst (mat.color);
             mat.color = _tag_colors [_all_renders [i].tag];
           }
         }
+        /*else if(true){
+          int j = 0;
+          foreach (var mat in _all_renders[i].sharedMaterials) {
+            _original_colors [i].AddFirst (mat.color);
+            var temporary_material = new Material (mat);
+            temporary_material.color = _tag_colors [_all_renders [i].tag];
+            _all_renders[i].sharedMaterials[j] = temporary_material;
+            j++;
+          }*/
       }
     }
   }

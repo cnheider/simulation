@@ -139,7 +139,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4694312369702610}
-  - component: {fileID: 114923677449424302}
+  - component: {fileID: 114233233138380994}
   m_Layer: 0
   m_Name: DataCollector
   m_TagString: Untagged
@@ -640,7 +640,7 @@ Light:
     m_Resolution: 3
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.01
+    m_Bias: 0.001
     m_NormalBias: 0
     m_NearPlane: 0.1
   m_Cookie: {fileID: 0}
@@ -742,6 +742,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lights_to_ignore:
   - {fileID: 108188103209193970}
+--- !u!114 &114233233138380994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562533738301822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1b06711f446fb54c947aa36de069f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deleteFileContent: 0
+  _gripper: {fileID: 0}
+  _target: {fileID: 0}
+  _depth_camera: {fileID: 20294574356447650}
+  _infrared_shadow_camera: {fileID: 20495345772018724}
+  _rgb_camera: {fileID: 20844981984807956}
+  _segmentation_camera: {fileID: 20647520448852292}
+  _episode_lenght: 1000
 --- !u!114 &114257797223561110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -796,25 +815,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lights_to_ignore:
   - {fileID: 108484706134688396}
---- !u!114 &114923677449424302
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1562533738301822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1b06711f446fb54c947aa36de069f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _deleteFileContent: 0
-  _gripper: {fileID: 0}
-  _target: {fileID: 0}
-  _depth_camera: {fileID: 20294574356447650}
-  _infrared_shadow_camera: {fileID: 20495345772018724}
-  _rgb_camera: {fileID: 20844981984807956}
-  _segmentation_camera: {fileID: 20647520448852292}
-  _episode_lenght: 20
 --- !u!124 &124564710968608940
 Behaviour:
   m_ObjectHideFlags: 1

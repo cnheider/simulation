@@ -19,6 +19,7 @@ public class Gripper : MonoBehaviour {
   GameObject[] _targets;
 
   Vector3 _reset_position;
+  BezierCurve _bezier_curve;
 
   [Space(1)]
   [Header("Game Objects")]
@@ -60,6 +61,7 @@ public class Gripper : MonoBehaviour {
     _reset_position = transform.position;
     _default_motor_position = _motor.transform.localPosition;
     _closed_motor_position = _closed_motor_transform.localPosition;
+    _bezier_curve = GameObject.FindObjectOfType<BezierCurve>();
 
     UpdateMeshFilterBounds();
 
@@ -165,6 +167,7 @@ public class Gripper : MonoBehaviour {
       _target_game_object.transform.parent = this.transform;
       state.TargetIsGrabbed();
       _path = FindPath(this.transform.position, _reset_position);
+      _intermediate_target = _path.Next (0.001f);
     }
 
     MaybeClawIsClosed();
@@ -200,6 +203,7 @@ public class Gripper : MonoBehaviour {
     if (Vector3.Distance(this._motor.transform.localPosition, _closed_motor_position) < _precision ) {
       _state.GripperIsClosed();
       _path = FindPath(this.transform.position, _reset_position);
+      _intermediate_target = _path.Next(0.001f);
       _state.ReturnToStartPosition();
     }
   }
@@ -389,9 +393,9 @@ public class Gripper : MonoBehaviour {
     UpdateMeshFilterBounds();
     var _path_list = PathFinding.FindPathAstar(start_position, target_position, _search_boundary, _grid_granularity, _agent_size, _approach_distance);
 
-    _path_list.Add(target_position);
     _path_list = PathFinding.SimplifyPath(_path_list);
-    var path = new Path(start_position, target_position, GameObject.Find("Bezier_Curve").gameObject, _path_list);
+    _path_list.Add(target_position);
+    var path = new Path(start_position, target_position, _bezier_curve, _path_list);
     return path;
   }
 
@@ -405,7 +409,7 @@ public class Gripper : MonoBehaviour {
       _intermediate_target = _path.Next(step_size);
     }
 
-    if (_debug) Debug.DrawRay(_intermediate_target, this.transform.forward, Color.green);
+    if (_debug) Debug.DrawRay(_intermediate_target, this.transform.forward, Color.magenta);
 
     if (rotate) transform.rotation = Quaternion.RotateTowards(this.transform.rotation, rotation, step_size * 50);
     transform.position = Vector3.MoveTowards(this.transform.position, _intermediate_target, step_size);

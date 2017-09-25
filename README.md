@@ -1,3 +1,8 @@
 # simulation
 
-![simulation](https://i.ytimg.com/vi/2Oev5FeU3jc/maxresdefault.jpg)
+![SegmentationWindow](images/segmentation.png)
+
+![rgb](images/rgb.gif)
+![segmentation](images/segmentation.gif)
+![depth](images/depth.gif)
+![infrared_shadow](images/infrared_shadow.gif)
