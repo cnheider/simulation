@@ -57,7 +57,7 @@ public class DataCollector : MonoBehaviour {
   void FixedUpdate () {
     if (_current_episode_progress == _episode_length - 1) {
       Vector3 screenPoint = _depth_camera.WorldToViewportPoint (_target.transform.position);
-      //if (screenPoint.z > 0 && screenPoint.x > 0.1 && screenPoint.x < 0.9 && screenPoint.y > 0.1 && screenPoint.y < 0.9) {
+      if (screenPoint.z > 0 && screenPoint.x > 0.1 && screenPoint.x < 0.9 && screenPoint.y > 0.1 && screenPoint.y < 0.9) {
         Vector3 gripper_position_relative_to_camera = this.transform.InverseTransformPoint (_gripper.transform.position);
         Vector3 gripper_direction_relative_to_camera = this.transform.InverseTransformDirection (_gripper.transform.eulerAngles);
         var gripper_transform_output = GetTransformOutput (_i, gripper_position_relative_to_camera, gripper_direction_relative_to_camera);
@@ -74,7 +74,7 @@ public class DataCollector : MonoBehaviour {
         SaveRenderTextureToImage (_i, _segmentation_camera, _file_path_segmentation);
 
         _i++;
-      //}
+      }
       _current_episode_progress = 0;
     }
     _current_episode_progress++;

@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 4188051971926122}
   - component: {fileID: 20647520448852292}
   - component: {fileID: 114306513689685590}
+  - component: {fileID: 114848110323859250}
   m_Layer: 0
   m_Name: SegmentationCamera
   m_TagString: Untagged
@@ -437,7 +438,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 0eb6035a7a0f81b478123a6943624132, type: 2}
   m_TargetDisplay: 0
@@ -472,7 +473,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 397526a456d4446bfb3742cfaf86a5e5, type: 2}
   m_TargetDisplay: 0
@@ -507,7 +508,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: c93a79a2dfff541188033bfb222b7902, type: 2}
   m_TargetDisplay: 0
@@ -542,7 +543,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: fa884919f4af94b439a0e37e3bfc80fb, type: 2}
   m_TargetDisplay: 0
@@ -640,7 +641,7 @@ Light:
     m_Resolution: 3
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.001
+    m_Bias: 0.01
     m_NormalBias: 0
     m_NearPlane: 0.1
   m_Cookie: {fileID: 0}
@@ -760,7 +761,7 @@ MonoBehaviour:
   _infrared_shadow_camera: {fileID: 20495345772018724}
   _rgb_camera: {fileID: 20844981984807956}
   _segmentation_camera: {fileID: 20647520448852292}
-  _episode_lenght: 1000
+  _episode_length: 10
 --- !u!114 &114257797223561110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -815,6 +816,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lights_to_ignore:
   - {fileID: 108484706134688396}
+--- !u!114 &114848110323859250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1414017768631198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095ba5a6bea9c4dd580d36ce0b4d9117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _use_shared_materials: 1
+  _colors_by_tag:
+  - tag: Target
+    color: {r: 0.48235294, g: 0.7294118, b: 0.25882354, a: 1}
+  - tag: Obstruction
+    color: {r: 1, g: 0.35483873, b: 0.35483873, a: 1}
+  - tag: Gripper
+    color: {r: 0.34071878, g: 0.2870019, b: 0.8088235, a: 1}
 --- !u!124 &124564710968608940
 Behaviour:
   m_ObjectHideFlags: 1
