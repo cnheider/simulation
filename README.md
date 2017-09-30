@@ -43,7 +43,8 @@ For more realistic depth images, this camera will provide information on overexp
 ![infrared_shadow](images/infrared_shadow.gif)
 
 # To Do's
-- [ ] ...
+- [ ] Guassian Noise sampling in data collection.
+- [ ] Be able to adjust a noise scale parameter, to inject noise into the data collected in multiple stages(camera images, positions of objects and so on).
 
 # Other Components Of the Neodroid Platform
 
