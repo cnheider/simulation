@@ -45,6 +45,7 @@ For more realistic depth images, this camera will provide information on overexp
 # To Do's
 - [ ] Guassian Noise sampling in data collection.
 - [ ] Be able to adjust a noise scale parameter, to inject noise into the data collected in multiple stages(camera images, positions of objects and so on).
+- [ ] Included the new instance segmentation camera from the droid package.
 
 # Other Components Of the Neodroid Platform
 
