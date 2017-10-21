@@ -1,6 +1,6 @@
 ![neodroid](images/header.png)
 
-# Simulation
+# Simulation (Deprecated, merged into droid)
 
 ## Features
 
